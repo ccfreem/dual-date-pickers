@@ -1,6 +1,10 @@
 import React from 'react'
+import CustomDateDialog from './CustomDateDialog'
+import { toggleDateDialog } from '../ducks/dateSlice'
+import { useDispatch } from 'react-redux'
 
 function App() {
+  const dispatch = useDispatch()
   return (
     <div className='App'>
       <header className='App-header'>
@@ -12,9 +16,15 @@ function App() {
           href='https://reactjs.org'
           target='_blank'
           rel='noopener noreferrer'
+        ></a>
+        <button
+          onClick={() => {
+            dispatch(toggleDateDialog(true))
+          }}
         >
-          Learn React
-        </a>
+          This
+        </button>
+        <CustomDateDialog>Hi</CustomDateDialog>
       </header>
     </div>
   )
