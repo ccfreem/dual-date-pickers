@@ -7,16 +7,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { KeyboardDatePicker } from '@material-ui/pickers'
-import { toggleDateDialog } from '../ducks/dateSlice'
+import { updateDate, toggleDateDialog, setButtonText } from '../ducks/dateSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { format, isValid } from 'date-fns'
 import styled from 'styled-components'
 
-const StyledButton = styled(Button)`
-  && {
-    color: #fff;
-  }
-`
 const PickerContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -28,24 +23,13 @@ const Picker = styled(KeyboardDatePicker)`
 `
 
 function CustomDateDialog(props) {
-  const {
-    filterStartDate,
-    filterEndDate,
-    updateFiltersWithRange,
-    filterLabel,
-  } = props
   const dispatch = useDispatch()
   const shouldOpenDialog = useSelector(
     state => state.dateReducer.shouldOpenDialog
   )
 
-  const [buttonText, setButtonText] = React.useState('')
   const [startDate, setStartDate] = React.useState(null)
   const [endDate, setEndDate] = React.useState(null)
-
-  const handleClickOpen = () => {
-    dispatch(toggleDateDialog(true))
-  }
 
   const handleClose = () => {
     dispatch(toggleDateDialog(false))
@@ -53,19 +37,18 @@ function CustomDateDialog(props) {
 
   const handleUpdate = () => {
     if (isValid(startDate) && isValid(endDate)) {
-      updateFiltersWithRange(startDate, endDate)
       dispatch(toggleDateDialog(false))
-      setButtonText(
-        `${format(startDate, 'M/d/yy')} - ${format(endDate, 'M/d/yy')}`
+      dispatch(updateDate({ startDate, endDate }))
+      dispatch(
+        setButtonText(
+          `${format(startDate, 'M/d/yy')} - ${format(endDate, 'M/d/yy')}`
+        )
       )
     }
   }
 
   return (
     <>
-      {filterLabel === 'Custom' && (
-        <StyledButton onClick={handleClickOpen}>{buttonText}</StyledButton>
-      )}
       <Dialog open={shouldOpenDialog} onClose={handleClose}>
         <DialogTitle>Custom Time Range</DialogTitle>
         <DialogContent>
@@ -76,7 +59,6 @@ function CustomDateDialog(props) {
                 variant='inline'
                 inputVariant='outlined'
                 label='Start Date'
-                initialFocusedDate={new Date(`2100-01-01`)}
                 format='MM/dd/yy'
                 value={startDate}
                 invalidDateMessage='Try mm/dd/yy'
@@ -89,7 +71,6 @@ function CustomDateDialog(props) {
                 variant='inline'
                 inputVariant='outlined'
                 label='End Date'
-                initialFocusedDate={new Date(`2100-01-01`)}
                 format='MM/dd/yy'
                 value={endDate}
                 invalidDateMessage='Try mm/dd/yy'

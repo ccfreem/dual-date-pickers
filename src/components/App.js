@@ -1,10 +1,19 @@
 import React from 'react'
 import CustomDateDialog from './CustomDateDialog'
+import Button from '@material-ui/core/Button'
 import { toggleDateDialog } from '../ducks/dateSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+
+const StyledButton = styled(Button)`
+  && {
+    color: black;
+  }
+`
 
 function App() {
   const dispatch = useDispatch()
+  const buttonText = useSelector(state => state.dateReducer.buttonText)
   return (
     <div className='App'>
       <header className='App-header'>
@@ -17,13 +26,13 @@ function App() {
           target='_blank'
           rel='noopener noreferrer'
         ></a>
-        <button
+        <StyledButton
           onClick={() => {
             dispatch(toggleDateDialog(true))
           }}
         >
-          This
-        </button>
+          {buttonText}
+        </StyledButton>
         <CustomDateDialog>Hi</CustomDateDialog>
       </header>
     </div>
