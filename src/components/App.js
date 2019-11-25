@@ -1,41 +1,31 @@
 import React from 'react'
-import CustomDateDialog from './CustomDateDialog'
-import Button from '@material-ui/core/Button'
-import { toggleDateDialog } from '../ducks/dateSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import DateFilter from './DateFilter'
 import styled from 'styled-components'
+import clouds from '../images/clouds.jpg'
 
-const StyledButton = styled(Button)`
-  && {
-    color: black;
-  }
+const OuterContainer = styled.div`
+  background-image: url(${clouds});
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`
+const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  height: 100vh;
 `
 
 function App() {
-  const dispatch = useDispatch()
-  const buttonText = useSelector(state => state.dateReducer.buttonText)
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        ></a>
-        <StyledButton
-          onClick={() => {
-            dispatch(toggleDateDialog(true))
-          }}
-        >
-          {buttonText}
-        </StyledButton>
-        <CustomDateDialog>Hi</CustomDateDialog>
-      </header>
-    </div>
+    <OuterContainer>
+      <InnerContainer>
+        <DateFilter />
+      </InnerContainer>
+    </OuterContainer>
   )
 }
 

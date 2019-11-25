@@ -7,22 +7,24 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { KeyboardDatePicker } from '@material-ui/pickers'
-import { updateDate, toggleDateDialog, setButtonText } from '../ducks/dateSlice'
+import { updateDateWithRange, toggleDateDialog } from '../ducks/dateSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { format, isValid } from 'date-fns'
+import { isValid } from 'date-fns'
+
 import styled from 'styled-components'
 
 const PickerContainer = styled.div`
   display: flex;
   justify-content: center;
 `
+
 const Picker = styled(KeyboardDatePicker)`
   && {
     margin-left: 15px;
   }
 `
 
-function CustomDateDialog(props) {
+function CustomDateDialog() {
   const dispatch = useDispatch()
   const shouldOpenDialog = useSelector(
     state => state.dateReducer.shouldOpenDialog
@@ -38,12 +40,7 @@ function CustomDateDialog(props) {
   const handleUpdate = () => {
     if (isValid(startDate) && isValid(endDate)) {
       dispatch(toggleDateDialog(false))
-      dispatch(updateDate({ startDate, endDate }))
-      dispatch(
-        setButtonText(
-          `${format(startDate, 'M/d/yy')} - ${format(endDate, 'M/d/yy')}`
-        )
-      )
+      dispatch(updateDateWithRange({ startDate, endDate }))
     }
   }
 
