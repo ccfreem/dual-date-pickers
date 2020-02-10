@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  format,
   startOfDay,
   endOfDay,
   subDays,
@@ -34,16 +33,15 @@ const updateFiltersWithRange = ({ startDate, endDate }) => {
     // based on the startDate selected
     selectedDateFilters = getSameDayDate(startDate)
   } else {
-    console.log('this')
     // Set the new date filters base on start and end of days
     selectedDateFilters = {
-      start: format(startOfDay(startDate), 'M/d/yy'),
-      end: format(endOfDay(endDate), 'M/d/yy'),
+      start: startOfDay(startDate),
+      end: endOfDay(endDate),
     }
   }
-  console.log(selectedDateFilters)
   return selectedDateFilters
 }
+
 const getDateFilters = newFilter => {
   let dateRange = {}
   const today = new Date()
@@ -96,8 +94,8 @@ const getDateFilters = newFilter => {
 
 const initialState = {
   dateRange: {
-    start: null,
-    end: null,
+    start: startOfDay(new Date()),
+    end: endOfDay(new Date()),
   },
   shouldOpenDialog: false,
   buttonText: 'Today',
@@ -108,9 +106,9 @@ const dateSlice = createSlice({
   initialState,
   reducers: {
     updateDateWithRange(state, action) {
-      const range = updateFiltersWithRange(action.payload)
-      console.log(range)
-      state.dateRange = updateFiltersWithRange(action.payload)
+      const updatedRange = updateFiltersWithRange(action.payload)
+
+      state.dateRange = updatedRange
       state.buttonText = 'Custom'
     },
     updateDateWithFilters(state, action) {

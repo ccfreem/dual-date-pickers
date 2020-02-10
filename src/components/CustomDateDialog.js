@@ -1,17 +1,16 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isValid } from 'date-fns'
+import DateFnsUtils from '@date-io/date-fns'
+import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { updateDateWithRange, toggleDateDialog } from '../ducks/dateSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { isValid } from 'date-fns'
-
-import styled from 'styled-components'
 
 const PickerContainer = styled.div`
   display: flex;
@@ -29,7 +28,6 @@ function CustomDateDialog() {
   const shouldOpenDialog = useSelector(
     state => state.dateReducer.shouldOpenDialog
   )
-
   const [startDate, setStartDate] = React.useState(null)
   const [endDate, setEndDate] = React.useState(null)
 
