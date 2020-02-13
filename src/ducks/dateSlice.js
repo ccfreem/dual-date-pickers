@@ -7,14 +7,17 @@ import {
   subMonths,
   startOfQuarter,
   isSameDay,
+  format,
 } from 'date-fns'
 
+// Get the start and end of the current day
 const getSameDayDate = date => {
   const startOfToday = startOfDay(date)
   const endOfToday = endOfDay(date)
   return { start: startOfToday, end: endOfToday }
 }
 
+// Get the first and last days of the last quarter
 const getLastQuarter = today => {
   const startOfCurrentQuarter = startOfQuarter(today)
   const lastDayOfLastQuarter = subDays(startOfCurrentQuarter, 1)
@@ -25,6 +28,7 @@ const getLastQuarter = today => {
   }
 }
 
+// Update the date filters with the range selected from the date picker
 const updateFiltersWithRange = ({ startDate, endDate }) => {
   // Check to see if the user has selected the same day
   let selectedDateFilters
@@ -39,9 +43,10 @@ const updateFiltersWithRange = ({ startDate, endDate }) => {
       end: endOfDay(endDate),
     }
   }
-  return selectedDateFilters
+  return formatDates(selectedDateFilters)
 }
 
+// Get the date filters based on the dropdown selections
 const getDateFilters = newFilter => {
   let dateRange = {}
   const today = new Date()
@@ -89,14 +94,21 @@ const getDateFilters = newFilter => {
       dateRange = getSameDayDate(today)
   }
 
-  return dateRange
+  return formatDates(dateRange)
+}
+
+const formatDates = dateRange => {
+  const { start, end } = dateRange
+  const formattedStart = format(start, 'M/d/yy')
+  const formattedEnd = format(end, 'M/d/yy')
+  return {
+    start: formattedStart,
+    end: formattedEnd,
+  }
 }
 
 const initialState = {
-  dateRange: {
-    start: startOfDay(new Date()),
-    end: endOfDay(new Date()),
-  },
+  dateRange: formatDates(getSameDayDate(new Date())),
   shouldOpenDialog: false,
   buttonText: 'Today',
 }
@@ -107,11 +119,12 @@ const dateSlice = createSlice({
   reducers: {
     updateDateWithRange(state, action) {
       const updatedRange = updateFiltersWithRange(action.payload)
-
       state.dateRange = updatedRange
       state.buttonText = 'Custom'
     },
     updateDateWithFilters(state, action) {
+      const filters = getDateFilters(action.payload)
+      console.log(filters)
       state.dateRange = getDateFilters(action.payload)
       state.buttonText = action.payload
     },
