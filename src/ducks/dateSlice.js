@@ -123,8 +123,6 @@ const dateSlice = createSlice({
       state.buttonText = 'Custom'
     },
     updateDateWithFilters(state, action) {
-      const filters = getDateFilters(action.payload)
-      console.log(filters)
       state.dateRange = getDateFilters(action.payload)
       state.buttonText = action.payload
     },

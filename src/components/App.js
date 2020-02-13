@@ -19,6 +19,7 @@ const InnerContainer = styled.div`
   justify-content: center;
   color: white;
 `
+
 const DateDisplay = styled.div`
   margin: auto;
   text-align: center;
@@ -30,12 +31,10 @@ const DateDisplay = styled.div`
 function App() {
   const dateRange = useSelector(state => state.dateReducer.dateRange)
   const { start, end } = dateRange
-  const formattedStart = format(start, 'M/d/yy')
-  const formattedEnd = format(end, 'M/d/yy')
 
   return (
     <OuterContainer>
-      <DateDisplay>{`${formattedStart} - ${formattedEnd}`}</DateDisplay>
+      <DateDisplay>{`${start} - ${end}`}</DateDisplay>
       <InnerContainer>
         <DateFilter />
       </InnerContainer>
