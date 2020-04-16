@@ -18,11 +18,8 @@ const InnerContainer = styled(Card)`
 
 const DateContainer = styled.div`
   font-size: 40px;
+  padding: 95px 0px;
   text-align: center;
-`
-
-const CardHeader = styled(Typography)`
-  font-size: 30px;
 `
 
 const Header = styled(AppBar)`
