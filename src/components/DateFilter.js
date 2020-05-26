@@ -8,8 +8,16 @@ import CustomDateDialog from './CustomDateDialog'
 import { toggleDateDialog, updateDateWithFilters } from '../ducks/dateSlice'
 
 const Dropdown = styled(Select)`
-  margin-left: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+  && {
+    color: #fff;
+    margin-left: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+    & {
+      .MuiSelect-icon {
+        color: #fff;
+      }
+    }
+  }
 `
 const CustomMenuItem = styled(MenuItem)`
   && {
