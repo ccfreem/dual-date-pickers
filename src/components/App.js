@@ -71,8 +71,7 @@ function App() {
           <Typography gutterBottom variant='h5' component='h2'>
             The currently selected date{sameDay ? ' is' : 's are'}: {rangeText}
           </Typography>
-          <Typography variant='body' component='p'></Typography>
-          <Typography variant='body' color='textSecondary' component='p'>
+          <Typography variant='body1' color='textSecondary' component='p'>
             To change the date, either select from the top right, or cick the
             button below to open the dual date picker.
           </Typography>
