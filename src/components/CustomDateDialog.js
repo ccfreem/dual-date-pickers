@@ -55,6 +55,9 @@ function CustomDateDialog() {
               label='Start Date'
               format='MM/dd/yy'
               value={startDate}
+              inputProps={{
+                'aria-label': 'Start Date'
+              }}
               invalidDateMessage='Try mm/dd/yy'
               maxDate={endDate ? endDate : new Date(`2100-01-01`)}
               onChange={date => setStartDate(date)}
@@ -67,6 +70,9 @@ function CustomDateDialog() {
               label='End Date'
               format='MM/dd/yy'
               value={endDate}
+              inputProps={{
+                'aria-label': 'End Date'
+              }}
               invalidDateMessage='Try mm/dd/yy'
               minDate={startDate ? startDate : false}
               onChange={date => setEndDate(date)}

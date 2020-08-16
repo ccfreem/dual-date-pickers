@@ -7,7 +7,7 @@ import {
   subMonths,
   startOfQuarter,
   isSameDay,
-  format,
+  format
 } from 'date-fns'
 
 // Get the start and end of the current day
@@ -24,7 +24,7 @@ const getLastQuarter = today => {
   const firstDayOfLastQuarter = startOfQuarter(lastDayOfLastQuarter)
   return {
     start: startOfDay(firstDayOfLastQuarter),
-    end: endOfDay(lastDayOfLastQuarter),
+    end: endOfDay(lastDayOfLastQuarter)
   }
 }
 
@@ -40,7 +40,7 @@ const updateFiltersWithRange = ({ startDate, endDate }) => {
     // Set the new date filters base on start and end of days
     selectedDateFilters = {
       start: startOfDay(startDate),
-      end: endOfDay(endDate),
+      end: endOfDay(endDate)
     }
   }
   return formatDates(selectedDateFilters)
@@ -58,25 +58,25 @@ const getDateFilters = newFilter => {
     case 'Last 7 days':
       dateRange = {
         start: startOfDay(subDays(today, 7)),
-        end: endOfDay(addDays(today, 1)),
+        end: endOfDay(addDays(today, 1))
       }
       break
     case 'Last 30 days':
       dateRange = {
         start: startOfDay(subDays(today, 30)),
-        end: endOfDay(addDays(today, 1)),
+        end: endOfDay(addDays(today, 1))
       }
       break
     case 'Last 60 days':
       dateRange = {
         start: startOfDay(subDays(today, 60)),
-        end: endOfDay(addDays(today, 1)),
+        end: endOfDay(addDays(today, 1))
       }
       break
     case 'Last 90 days':
       dateRange = {
         start: startOfDay(subDays(today, 90)),
-        end: endOfDay(addDays(today, 1)),
+        end: endOfDay(addDays(today, 1))
       }
       break
     case 'Last quarter':
@@ -85,7 +85,7 @@ const getDateFilters = newFilter => {
     case 'Last 12 months':
       dateRange = {
         start: startOfDay(subMonths(today, 12)),
-        end: endOfDay(today),
+        end: endOfDay(today)
       }
       break
 
@@ -103,17 +103,17 @@ const formatDates = dateRange => {
   const formattedEnd = format(end, 'M/d/yy')
   return {
     start: formattedStart,
-    end: formattedEnd,
+    end: formattedEnd
   }
 }
 
-const initialState = {
+export const initialState = {
   dateRange: formatDates(getSameDayDate(new Date())),
   shouldOpenDialog: false,
-  buttonText: 'Today',
+  buttonText: 'Today'
 }
 
-const dateSlice = createSlice({
+export const dateSlice = createSlice({
   name: 'date',
   initialState,
   reducers: {
@@ -128,14 +128,14 @@ const dateSlice = createSlice({
     },
     toggleDateDialog(state, action) {
       state.shouldOpenDialog = action.payload
-    },
-  },
+    }
+  }
 })
 
 export const {
   updateDateWithRange,
   toggleDateDialog,
-  updateDateWithFilters,
+  updateDateWithFilters
 } = dateSlice.actions
 
 export default dateSlice.reducer
