@@ -76,7 +76,9 @@ function App() {
             button below to open the dual date picker.
           </Typography>
           <ButtonContainer>
-            <Button onClick={handleClick}>Open Dual Date Picker</Button>
+            <Button id='open-dialog-button' onClick={handleClick}>
+              Open Dual Date Picker
+            </Button>
           </ButtonContainer>
         </CardContent>
       </InnerContainer>
